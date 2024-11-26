@@ -27,8 +27,9 @@ class Barang extends Model
         return $this->hasMany(Penjualan::class, 'barang_id');
     }
 
-    public function supplier()
-    {
-        return $this->hasMany(Supplier::class, 'supplier_id');
-    }
+   // Model Barang.php
+public function supplier()
+{
+    return $this->belongsTo(Supplier::class, 'supplier_id');
+}
 }
