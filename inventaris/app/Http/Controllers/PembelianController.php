@@ -25,8 +25,8 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'barang_id' => 'required|exists:barang,id',
-            'supplier_id' => 'required|exists:supplier,id',
+            'barang_id' => 'required',
+            'supplier_id' => 'required',
             'jumlah' => 'required|integer|min:1',
             'harga' => 'required|numeric',
             'tanggal_pembelian' => 'required|date',
@@ -53,4 +53,3 @@ class PembelianController extends Controller
         return redirect()->route('pembelian.index')->with('success', 'Pembelian berhasil dihapus!');
     }
 }
-    

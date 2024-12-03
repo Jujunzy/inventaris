@@ -26,23 +26,20 @@ class PenjualanController extends Controller
         $request->validate([
             'barang_id' => 'required|exists:barang,id',
             'jumlah' => 'required|integer|min:1',
-            'harga' => 'required|numeric',
-            'tanggal_penjualan' => 'required|date',
+            'total_harga' => 'required|numeric|min:0',
+            'tanggal' => 'required|date',
         ]);
 
-        $barang = Barang::find($request->barang_id);
+        // Simpan data ke database
+        Penjualan::create([
+            'barang_id' => $request->barang_id,
+            'jumlah' => $request->jumlah,
+            'total_harga' => $request->total_harga,
+            'tanggal' => $request->tanggal,
+        ]);
 
-        if ($barang->stok < $request->jumlah) {
-            return back()->withErrors(['stok' => 'Stok barang tidak mencukupi!'])->withInput();
-        }
-
-        Penjualan::create($request->all());
-
-        // Kurangi stok barang
-        $barang->stok -= $request->jumlah;
-        $barang->save();
-
-        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil dicatat!');
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('penjualan.index')->with('success', 'Data penjualan berhasil disimpan.');
     }
 
     public function destroy(Penjualan $penjualan)

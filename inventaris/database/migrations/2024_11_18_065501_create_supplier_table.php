@@ -12,7 +12,7 @@ class CreateSupplierTable extends Migration
             $table->id();
             $table->string('nama_supplier');
             $table->string('alamat');
-            $table->string('kontak')->nullable();
+            $table->string('kontak')->unique(); // Tambahkan unique()
             $table->timestamps();
         });
     }
@@ -22,4 +22,3 @@ class CreateSupplierTable extends Migration
         Schema::dropIfExists('supplier');
     }
 }
-

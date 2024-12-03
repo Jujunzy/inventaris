@@ -12,14 +12,20 @@
                 <select name="barang_id" id="barang_id" class="form-control">
                     <option value="">Pilih Barang</option>
                     @foreach ($barang as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        <option value="{{ $item->id }}">{{ $item->nama_barang }}</option>
                     @endforeach
                 </select>
+                @error('barang_id')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="jumlah" class="form-label">Jumlah</label>
                 <input type="number" name="jumlah" id="jumlah" class="form-control" required>
+                @error('jumlah')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <div class="mb-3">
@@ -27,9 +33,20 @@
                 <select name="supplier_id" id="supplier_id" class="form-control">
                     <option value="">Pilih Supplier</option>
                     @foreach ($supplier as $supplier)
-                        <option value="{{ $supplier->id }}">{{ $supplier->nama }}</option>
+                        <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }}</option>
                     @endforeach
                 </select>
+                @error('supplier_id')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
+                <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control" required>
+                @error('tanggal_pembelian')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
