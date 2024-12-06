@@ -26,16 +26,16 @@ class PenjualanController extends Controller
         $request->validate([
             'barang_id' => 'required|exists:barang,id',
             'jumlah' => 'required|integer|min:1',
-            'total_harga' => 'required|numeric|min:0',
-            'tanggal' => 'required|date',
+            'harga' => 'required|numeric|min:0',
+            'tanggal_penjualan' => 'required|date',
         ]);
 
         // Simpan data ke database
         Penjualan::create([
             'barang_id' => $request->barang_id,
             'jumlah' => $request->jumlah,
-            'total_harga' => $request->total_harga,
-            'tanggal' => $request->tanggal,
+            'harga' => $request->harga,
+            'tanggal_penjualan' => $request->tanggal_penjualan,
         ]);
 
         // Redirect ke halaman index dengan pesan sukses

@@ -61,4 +61,11 @@ class SupplierController extends Controller
         $supplier->delete();
         return redirect()->route('supplier.index')->with('success', 'Supplier berhasil dihapus!');
     }
+
+    public function show($id)
+    {
+        $supplier = Supplier::findOrFail($id);  // Ambil data supplier berdasarkan ID
+        return view('supplier.show', compact('supplier'));
+    }
+
 }

@@ -62,11 +62,12 @@
 
     public function show($id)
     {
-        // Mencari supplier berdasarkan ID
-        $supplier = Supplier::findOrFail($id);
+        // Mencari barang berdasarkan ID dan memuat relasi 'supplier'
+        $barang = Barang::with('supplier')->findOrFail($id);
 
-        // Mengirim data supplier ke view
-        return view('supplier.show', compact('supplier'));
+        // Mengirim data barang ke view
+        return view('barang.show', compact('barang'));
     }
+
 
     }

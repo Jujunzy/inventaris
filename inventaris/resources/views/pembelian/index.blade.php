@@ -8,7 +8,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>No</th>
                 <th>Barang</th>
                 <th>Jumlah</th>
                 <th>Total Harga</th>
@@ -17,20 +17,20 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($pembelian as $pembelian)
+            @forelse($pembelian as $item) <!-- Jangan overwrite variabel $pembelian -->
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $pembelian->barang->nama }}</td>
-                    <td>{{ $pembelian->jumlah }}</td>
-                    <td>{{ number_format($pembelian->total_harga, 0, ',', '.') }}</td>
-                    <td>{{ $pembelian->supplier->nama }}</td>
+                    <td>{{ $item->barang->nama_barang ?? 'Barang tidak ditemukan' }}</td> <!-- Hindari error jika barang null -->
+                    <td>{{ $item->jumlah }}</td>
+                    <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                    <td>{{ $item->supplier->nama_supplier ?? 'Supplier tidak ditemukan' }}</td> <!-- Hindari error jika supplier null -->
                     <td>
-                        <a href="{{ route('pembelian.show', $pembelian->id) }}" class="btn btn-info btn-sm">Lihat</a>
+                        <a href="{{ route('pembelian.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">Tidak ada data.</td>
+                    <td colspan="6" class="text-center">Tidak ada data.</td>
                 </tr>
             @endforelse
         </tbody>

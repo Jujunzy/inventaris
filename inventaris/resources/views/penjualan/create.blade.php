@@ -36,17 +36,17 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="total_harga" class="form-label">Total Harga</label>
-                    <input type="number" name="total_harga" id="total_harga" class="form-control @error('total_harga') is-invalid @enderror" value="{{ old('total_harga') }}">
-                    @error('total_harga')
+                    <label for="harga" class="form-label">Total Harga</label>
+                    <input type="number" name="harga" id="total_harga" class="form-control @error('total_harga') is-invalid @enderror" value="{{ old('harga') }}">
+                    @error('harga')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="tanggal" class="form-label">Tanggal Penjualan</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}">
-                    @error('tanggal')
+                    <label for="tanggal_penjualan" class="form-label">Tanggal Penjualan</label>
+                    <input type="date" name="tanggal_penjualan" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}">
+                    @error('tanggal_penjualan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -60,4 +60,3 @@
     </div>
 </div>
 @endsection
-    

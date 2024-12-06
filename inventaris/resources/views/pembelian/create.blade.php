@@ -29,6 +29,14 @@
             </div>
 
             <div class="mb-3">
+                <label for="harga" class="form-label">Harga</label>
+                <input type="number" name="harga" id="harga" class="form-control" min="0" required>
+                @error('harga')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="supplier_id" class="form-label">Supplier</label>
                 <select name="supplier_id" id="supplier_id" class="form-control">
                     <option value="">Pilih Supplier</option>
