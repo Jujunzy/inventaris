@@ -9,9 +9,9 @@
         @method('PUT')
 
         <div class="mb-3">
-            <label for="nama" class="form-label">Nama Supplier</label>
-            <input type="text" name="nama" id="nama" class="form-control" value="{{ old('nama', $supplier->nama) }}" required>
-            @error('nama')
+            <label for="nama_supplier" class="form-label">Supplier</label>
+            <input type="text" name="nama_supplier" id="nama_supplier" class="form-control" value="{{ old('nama_supplier', $supplier->nama_supplier) }}" required>
+            @error('nama_supplier')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
@@ -25,9 +25,9 @@
         </div>
 
         <div class="mb-3">
-            <label for="telepon" class="form-label">Telepon</label>
-            <input type="text" name="kontak" id="telepon" class="form-control" value="{{ old('telepon', $supplier->telepon) }}" required>
-            @error('telepon')
+            <label for="kontak" class="form-label">Telepon</label>
+            <input type="text" name="kontak" id="kontak" class="form-control" value="{{ old('kontak', $supplier->kontak) }}" required>
+            @error('kontak')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
