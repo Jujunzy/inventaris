@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +13,11 @@ class CreateBarangTable extends Migration
             $table->id();
             $table->string('nama_barang');
             $table->unsignedBigInteger('kategori_id');
+            $table->foreignIdFor(Supplier::class)->constrained();
             $table->decimal('harga', 10, 2);
             $table->integer('stok')->default(0);
             $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
@@ -25,4 +26,3 @@ class CreateBarangTable extends Migration
         Schema::dropIfExists('barang');
     }
 }
-

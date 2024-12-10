@@ -27,6 +27,7 @@
             $request->validate([
                 'nama_barang' => 'required|max:255',
                 'kategori_id' => 'required|exists:kategori,id',
+                'supplier_id' => 'required|exists:supplier,id',
                 'harga' => 'required|numeric',
                 'stok' => 'required|integer|min:0',
             ]);
@@ -46,6 +47,7 @@
             $request->validate([
                 'nama_barang' => 'required|max:255',
                 'kategori_id' => 'required|exists:kategori,id',
+                'supplier' => 'requred|exists:supplier,id',
                 'harga' => 'required|numeric',
                 'stok' => 'required|integer|min:0',
             ]);

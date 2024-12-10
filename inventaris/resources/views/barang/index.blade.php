@@ -26,7 +26,7 @@
                     <td>{{ $item->kategori->nama_kategori }}</td>
                     <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                     <td>{{ $item->stok }}</td>
-                    <td>{{ $item->supplier ? $item->supplier->nama_supplier : 'Tidak ada supplier' }}</td>
+                    <td>{{ $item->supplier ? $item->supplier->nama_supplier: 'Tidak ada supplier' }}</td>
                     <td>
                         <a href="{{ route('barang.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
                         <a href="{{ route('barang.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>

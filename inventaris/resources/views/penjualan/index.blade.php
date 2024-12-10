@@ -25,9 +25,9 @@
                 @forelse($penjualan as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->barang->nama ?? 'Barang tidak ditemukan' }}</td> <!-- Validasi jika relasi null -->
+                        <td>{{ $item->barang->nama_barang ?? 'Barang tidak ditemukan' }}</td> <!-- Validasi jika relasi null -->
                         <td>{{ $item->jumlah }}</td>
-                        <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                        <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
                         <td>
                             <a href="{{ route('penjualan.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
                         </td>

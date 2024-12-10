@@ -22,7 +22,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->barang->nama_barang ?? 'Barang tidak ditemukan' }}</td> <!-- Hindari error jika barang null -->
                     <td>{{ $item->jumlah }}</td>
-                    <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                    <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
                     <td>{{ $item->supplier->nama_supplier ?? 'Supplier tidak ditemukan' }}</td> <!-- Hindari error jika supplier null -->
                     <td>
                         <a href="{{ route('pembelian.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
