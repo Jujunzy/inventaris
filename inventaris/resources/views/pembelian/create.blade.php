@@ -51,7 +51,14 @@
 
             <div class="mb-3">
                 <label for="tanggal_pembelian" class="form-label">Tanggal Pembelian</label>
-                <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control" required>
+                <input
+                    type="date"
+                    name="tanggal_pembelian"
+                    id="tanggal_pembelian"
+                    class="form-control"
+                    required
+                    min="{{ date('Y-m-d') }}"
+                >
                 @error('tanggal_pembelian')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror

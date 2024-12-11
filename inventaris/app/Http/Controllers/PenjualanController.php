@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
 use App\Models\Barang;
-use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class PenjualanController extends Controller
@@ -27,7 +26,15 @@ class PenjualanController extends Controller
             'barang_id' => 'required|exists:barang,id',
             'jumlah' => 'required|integer|min:1',
             'harga' => 'required|numeric|min:0',
-            'tanggal_penjualan' => 'required|date',
+            'tanggal_penjualan' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) {
+                    if ($value < date('Y-m-d')) {
+                        $fail('Tanggal penjualan tidak boleh kurang dari hari ini.');
+                    }
+                },
+            ],
         ]);
 
         // Simpan data ke database
@@ -52,14 +59,4 @@ class PenjualanController extends Controller
         $penjualan->delete();
         return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil dihapus!');
     }
-
-    public function show($id)
-    {
-        // Mencari supplier berdasarkan ID
-        $supplier = Supplier::findOrFail($id);
-
-        // Mengirim data supplier ke view
-        return view('supplier.show', compact('supplier'));
-    }
-
 }
