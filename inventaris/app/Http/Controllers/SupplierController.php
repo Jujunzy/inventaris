@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::all();
+        // Mengurutkan data supplier berdasarkan `created_at` terbaru
+        $supplier = Supplier::orderBy('created_at', 'desc')->get();
+
         return view('supplier.index', compact('supplier'));
     }
+
 
     public function create()
     {
@@ -20,21 +24,21 @@ class SupplierController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nama_supplier' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'kontak' => 'required|string|max:15|unique:supplier,kontak',
+            'alamat' => 'required|string|max:500',
+            'kontak' => 'required|string|max:15',
+        ], [
+            'nama_supplier.required' => 'Nama supplier wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'kontak.required' => 'Nomor telepon wajib diisi.',
         ]);
 
-        // Simpan data supplier
-        Supplier::create([
-            'nama_supplier' => $request->nama_supplier,
-            'alamat' => $request->alamat,
-            'kontak' => $request->kontak,
-        ]);
+        // Simpan data ke database
+        Supplier::create($validatedData);
 
-        // Redirect ke index dengan pesan sukses
-        return redirect()->route('supplier.index')->with('success', 'Data supplier berhasil ditambahkan.');
+        // Redirect dengan pesan sukses
+        return redirect()->route('supplier.index')->with('success', 'Supplier berhasil ditambahkan.');
     }
 
 
@@ -58,8 +62,14 @@ class SupplierController extends Controller
 
     public function destroy(Supplier $supplier)
     {
-        $supplier->delete();
-        return redirect()->route('supplier.index')->with('success', 'Supplier berhasil dihapus!');
+        try {
+
+            $supplier->delete();
+            return redirect()->route('supplier.index')->with('success', 'Supplier berhasil dihapus!');
+        } catch (QueryException $e) {
+
+            return redirect()->route('supplier.index')->with('error', 'Supplier tidak bisa dihapus karena digunakan di table lain');
+        }
     }
 
     public function show($id)
@@ -67,5 +77,4 @@ class SupplierController extends Controller
         $supplier = Supplier::findOrFail($id);  // Ambil data supplier berdasarkan ID
         return view('supplier.show', compact('supplier'));
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class KategoriController extends Controller
 {
@@ -50,7 +51,11 @@ class KategoriController extends Controller
 
     public function destroy(Kategori $kategori)
     {
-        $kategori->delete();
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        try {
+            $kategori->delete();
+            return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
+        } catch (QueryException $e) {
+            return redirect()->route('kategori.index')->with('error', 'Kategori tidak dapat dihapus karena masih digunakan di tabel lain.');
+        }
     }
 }

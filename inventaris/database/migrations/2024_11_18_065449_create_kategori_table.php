@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateKategoriTable extends Migration
-{   
+{
     public function up()
     {
         Schema::create('kategori', function (Blueprint $table) {

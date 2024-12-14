@@ -6,6 +6,14 @@
 <div class="container">
     <h1 class="mb-4">Daftar Barang</h1>
     <a href="{{ route('barang.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+    
     <table class="table table-bordered">
         <thead>
             <tr>

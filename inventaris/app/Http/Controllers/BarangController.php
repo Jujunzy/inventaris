@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Kategori;
 use App\Models\Supplier;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -29,13 +30,12 @@ class BarangController extends Controller
                 'nama_barang' => 'required|max:255',
                 'kategori_id' => 'required|exists:kategori,id',
                 'supplier_id' => 'required|exists:supplier,id',
-                'harga' => 'required|numeric|min:0', // Tambahkan aturan min:0
+                'harga' => 'required|numeric|min:0',
                 'stok' => 'required|integer|min:0',
             ],
             $this->validationMessages(),
             $this->attributeNames()
         );
-
 
         Barang::create($validated);
         return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
@@ -43,8 +43,9 @@ class BarangController extends Controller
 
     public function edit(Barang $barang)
     {
-        $kategoris = Kategori::all();
-        return view('barang.edit', compact('barang', 'kategoris'));
+        $kategori = Kategori::all();
+        $supplier = Supplier::all();
+        return view('barang.edit', compact('barang', 'kategori', 'supplier'));
     }
 
     public function update(Request $request, Barang $barang)
@@ -54,7 +55,7 @@ class BarangController extends Controller
                 'nama_barang' => 'required|max:255',
                 'kategori_id' => 'required|exists:kategori,id',
                 'supplier_id' => 'required|exists:supplier,id',
-                'harga' => 'required|numeric',
+                'harga' => 'required|numeric|min:0',
                 'stok' => 'required|integer|min:0',
             ],
             $this->validationMessages(),
@@ -65,15 +66,11 @@ class BarangController extends Controller
         return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
     }
 
-    public function destroy(Barang $barang)
-    {
-        $barang->delete();
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
-    }
+
 
     public function show($id)
     {
-        $barang = Barang::with('supplier')->findOrFail($id);
+        $barang = Barang::with('supplier', 'kategori')->findOrFail($id);
         return view('barang.show', compact('barang'));
     }
 
@@ -88,13 +85,12 @@ class BarangController extends Controller
             'supplier_id.exists' => 'Supplier yang dipilih tidak valid.',
             'harga.required' => 'Harga barang wajib diisi.',
             'harga.numeric' => 'Harga barang harus berupa angka.',
-            'harga.min' => 'Harga barang tidak boleh bernilai negatif.', // Pesan untuk aturan min
+            'harga.min' => 'Harga barang tidak boleh bernilai negatif.',
             'stok.required' => 'Stok barang wajib diisi.',
             'stok.integer' => 'Stok barang harus berupa angka bulat.',
             'stok.min' => 'Stok barang tidak boleh kurang dari :min.',
         ];
     }
-
 
     private function attributeNames()
     {
@@ -105,5 +101,15 @@ class BarangController extends Controller
             'harga' => 'Harga',
             'stok' => 'Stok',
         ];
+    }
+
+    public function destroy(Barang $barang)
+    {
+        try {
+            $barang->delete();
+            return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+        } catch (QueryException $e) {
+            return redirect()->route('barang.index')->with('error', 'Barang tidak dapat dihapus karena memiliki relasi dengan data lain.');
+        }
     }
 }

@@ -22,32 +22,32 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'barang_id' => 'required|exists:barang,id',
             'jumlah' => 'required|integer|min:1',
             'harga' => 'required|numeric|min:0',
-            'tanggal_penjualan' => [
-                'required',
-                'date',
-                function ($attribute, $value, $fail) {
-                    if ($value < date('Y-m-d')) {
-                        $fail('Tanggal penjualan tidak boleh kurang dari hari ini.');
-                    }
-                },
-            ],
+            'tanggal_penjualan' => 'required|date|after_or_equal:today',
+        ], [
+            'barang_id.required' => 'Barang harus dipilih.',
+            'barang_id.exists' => 'Barang yang dipilih tidak valid.',
+            'jumlah.required' => 'Jumlah wajib diisi.',
+            'jumlah.integer' => 'Jumlah harus berupa angka.',
+            'jumlah.min' => 'Jumlah minimal adalah 1.',
+            'harga.required' => 'Total harga wajib diisi.',
+            'harga.numeric' => 'Total harga harus berupa angka.',
+            'harga.min' => 'Total harga tidak boleh kurang dari 0.',
+            'tanggal_penjualan.required' => 'Tanggal penjualan wajib diisi.',
+            'tanggal_penjualan.date' => 'Tanggal penjualan harus berupa tanggal yang valid.',
+            'tanggal_penjualan.after_or_equal' => 'Tanggal penjualan tidak boleh kurang dari hari ini.',
         ]);
 
         // Simpan data ke database
-        Penjualan::create([
-            'barang_id' => $request->barang_id,
-            'jumlah' => $request->jumlah,
-            'harga' => $request->harga,
-            'tanggal_penjualan' => $request->tanggal_penjualan,
-        ]);
+        Penjualan::create($validatedData);
 
-        // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('penjualan.index')->with('success', 'Data penjualan berhasil disimpan.');
+        // Redirect dengan pesan sukses
+        return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil ditambahkan.');
     }
+
 
     public function destroy(Penjualan $penjualan)
     {

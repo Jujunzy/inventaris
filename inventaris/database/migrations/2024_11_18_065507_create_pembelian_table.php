@@ -17,8 +17,8 @@ class CreatePembelianTable extends Migration
             $table->date('tanggal_pembelian');
             $table->timestamps();
 
-            $table->foreign('supplier_id')->references('id')->on('supplier')->onDelete('cascade');
-            $table->foreign('barang_id')->references('id')->on('barang')->onDelete('cascade');
+            $table->foreign('supplier_id')->references('id')->on('supplier')->restrictOnDelete();
+            $table->foreign('barang_id')->references('id')->on('barang')->restrictOnDelete();
         });
     }
 

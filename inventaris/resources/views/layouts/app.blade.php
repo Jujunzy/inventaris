@@ -22,5 +22,13 @@
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Mencegah form logout langsung dijalankan
+            if (confirm('Apakah Anda yakin ingin logout?')) {
+                document.getElementById('logout-form').submit();
+            }
+        }
+    </script>
 </body>
 </html>

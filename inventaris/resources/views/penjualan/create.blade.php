@@ -39,8 +39,8 @@
 
                     <div class="mb-3">
                         <label for="harga" class="form-label">Total Harga</label>
-                        <input type="number" name="harga" id="total_harga"
-                            class="form-control @error('total_harga') is-invalid @enderror" value="{{ old('harga') }}">
+                        <input type="number" name="harga" id="harga"
+                            class="form-control @error('harga') is-invalid @enderror" value="{{ old('harga') }}">
                         @error('harga')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -48,13 +48,13 @@
 
                     <div class="mb-3">
                         <label for="tanggal_penjualan" class="form-label">Tanggal Penjualan</label>
-                        <input type="date" name="tanggal_penjualan" id="tanggal_penjualan" class="form-control" required
-                            min="{{ date('Y-m-d') }}">
+                        <input type="date" name="tanggal_penjualan" id="tanggal_penjualan"
+                            class="form-control @error('tanggal_penjualan') is-invalid @enderror"
+                            value="{{ old('tanggal_penjualan') }}" min="{{ date('Y-m-d') }}">
                         @error('tanggal_penjualan')
-                            <small class="text-danger">{{ $message }}</small>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
 
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('penjualan.index') }}" class="btn btn-secondary">Batal</a>

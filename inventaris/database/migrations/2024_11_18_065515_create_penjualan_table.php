@@ -16,7 +16,7 @@ class CreatePenjualanTable extends Migration
             $table->date('tanggal_penjualan');
             $table->timestamps();
 
-            $table->foreign('barang_id')->references('id')->on('barang')->onDelete('cascade');
+            $table->foreign('barang_id')->references('id')->on('barang')->restrictOnDelete();
         });
     }
 
